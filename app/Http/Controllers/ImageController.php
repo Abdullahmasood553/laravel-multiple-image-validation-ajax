@@ -25,6 +25,8 @@ class ImageController extends Controller
             $path = $request->file('screenshot')->storeAs('public/users', $compPic);
             $post->screenshot = 'users/'.$compPic;
         }
+
+
         
         if ($post->save()) {
             return ['status' => true, 'message' => 'Image Completed Successful'];

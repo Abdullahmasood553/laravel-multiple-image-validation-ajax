@@ -12,15 +12,15 @@
             <div class="img-uploade-row">
                 <div class="upload-column">
                  
-                    <input onchange="doAfterSelectImageInsta(this)" type="file" name="screenshot" class="" id="instagram_screenshot_"
+                    <input onchange="doAfterSelectImage(this)" type="file" name="screenshot" class="" id="screenshot_"
                         style="display:none" >
                   
-                    <label for="instagram_screenshot_" class="img-uploaders">
-                        <img src="{{asset('public/assets/images/placeholder.png')}}" id="image_user_insta_" />
+                    <label for="screenshot_" class="img-uploaders">
+                        <img src="{{asset('public/assets/images/placeholder.png')}}" id="post_user_image_" />
                     </label>
                   
                     <p>Instagram</p>
-                    <span style="display:none" id="error_instagram_screenshot_">
+                    <span style="display:none" id="error_screenshot_">
                         <div class="alert alert-danger" role="alert">Instagram Screenshot is required</div>
                     </span>
                 </div>
@@ -89,7 +89,7 @@
 
            function userHasUploadedScreenshots() {
                 let check = true;
-                let file = $('#instagram_screenshot_').get(0).files[0];
+                let file = $('#screenshot_').get(0).files[0];
                 console.log(file);
                 if (file == undefined || file == null) {
                     check = false;
@@ -103,15 +103,15 @@
 
 
             function handleErrors() {
-                let file = $("#instagram_screenshot_").get(0).files[0];
+                let file = $("#screenshot_").get(0).files[0];
                 if (file == undefined || file == null) {
-                    $("#error_instagram_screenshot_").show();
+                    $("#error_screenshot_").show();
                 } else {
-                    $("#error_instagram_screenshot_").hide();
+                    $("#error_screenshot_").hide();
                 }
             }
 
-            function doAfterSelectImageInsta(input) {
+            function doAfterSelectImage(input) {
                 readURL(input);
             }
 
@@ -119,7 +119,7 @@
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('#image_user_insta_').attr('src', e.target.result);
+                        $('#post_user_image_').attr('src', e.target.result);
                     };
                     reader.readAsDataURL(input.files[0]);
                 }
