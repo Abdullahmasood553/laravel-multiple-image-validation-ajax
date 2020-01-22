@@ -13,49 +13,6 @@
     <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-          .photo-img {
-              width: 60px;
-              height: 60px;
-              background-repeat: no-repeat;
-              background-size: cover;
-              background-position: center;
-              margin-right: 20px;
-              border-radius: 50%;
-          }
-
-
-        .photo-row {
-            margin-bottom: 30px;
-        }
-
-        .profile-content, .photo-row {
-            display: flex;
-            align-items: center;
-        }
-
-      .change-photo {
-          cursor: pointer;
-          color: #010101;
-          font-size: 16px;
-          font-weight: 400;
-          font-family: 'Open Sans', sans-serif;
-      }
-        .change-photo {
-            font-size: 13px;
-        }
-
-      .delete-photo {
-        color: #D61043;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 600;
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    .delete-photo span {
-        color: #AFAFAF;
-        margin: 0 10px;
-    }
 
     /* image validation css */
 
@@ -104,7 +61,6 @@
     font-weight: 500;
     font-size: 13px;
 }
-
 
 
 </style>
