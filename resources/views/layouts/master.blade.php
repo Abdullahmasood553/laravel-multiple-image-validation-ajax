@@ -63,6 +63,17 @@
 }
 
 
+.proporsal-imag {
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+
 </style>
 </head>
 <body>
