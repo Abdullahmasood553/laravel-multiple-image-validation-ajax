@@ -161,7 +161,7 @@
                 response.forEach(element => {
                     $('.serviceList tbody').append(`<tr>
                 <td>${element.id}</td>
-                <td><img src="<?php echo e(asset('storage/app/public/${element.screenshot}')); ?>" class="proporsal-imag"> </td>
+                <td><img src="<?php echo e(asset('public/storage/users/${element.screenshot}')); ?>" class="proporsal-imag"> </td>
                 <td><button class="btn btn-danger btn-sm del_post" id="${element['id']}">Delete</button></td>
 
         </tr>`);
@@ -174,9 +174,10 @@
     //Delete for Sub Category
     $(document).on('click', '.del_post', function () {
         var id = $(this).attr('id');
+    
         $.ajax({
             type: 'GET',
-            url: 'delete_post',
+            url: 'delete_post/'+id,
             data: {
                 id: id
             },

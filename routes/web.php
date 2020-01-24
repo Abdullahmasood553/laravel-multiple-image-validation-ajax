@@ -18,7 +18,6 @@
 Route::get('get_image', 'ImageController@get_image');
 Route::post('get-approved-completed-jobs','ImageController@completedOrderJobModal')->name('post.completed.job.modal');
 
-
 Route::get('get_posts', 'ImageController@get_posts');
 
-Route::get('delete_post', 'ImageController@delete_post');
+Route::get('delete_post/{id}', 'ImageController@delete_post');

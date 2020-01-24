@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 use DB;
+use File;
 
 class ImageController extends Controller
 {
@@ -24,7 +25,7 @@ class ImageController extends Controller
             $extension = $request->file('screenshot')->getClientOriginalExtension();
             $compPic = str_replace(' ', '_', $fileNameOnly).'-'. rand() .'_'.time().'.'.$extension;
             $path = $request->file('screenshot')->storeAs('public/users', $compPic);
-            $post->screenshot = 'users/'.$compPic;
+            $post->screenshot = $compPic;
         }
         
         if ($post->save()) {
@@ -39,8 +40,12 @@ class ImageController extends Controller
          echo json_encode($posts);
     }
 
-    public function delete_post(Request $request) {
-        $post = DB::table('posts')->where('id', $request->id);
+    public function delete_post($id) {
+        $post = Post::findOrFail($id);
+        if(Storage::exists('public/users/'.str_replace('./storage/users/', '', $post->screenshot))){
+            Storage::delete('public/users/'.str_replace('./storage/users/', '', $post->screenshot));
+        }
+
         if ($post->delete()) {
             return ['status' => true, 'message' => 'Deleted Successful'];
         } else {
