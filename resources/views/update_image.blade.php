@@ -6,9 +6,9 @@
 
 <div class="container mt-4">
     <form method="POST" id="updatePostForm" enctype="multipart/form-data">
-        <input type="hidden" name="post_updating_id">
+        <input type="hidden" name="post_updating_id" value="{{ $post->id }}">
         @csrf
-
+     
         <div class="upload-imgs">
             <div class="img-uploade-row">
                 <div class="upload-column">
@@ -74,7 +74,7 @@
             dataType: 'JSON',
             contentType: false,
             processData: false,
-            url: "update_post"+ id,
+            url: "update_post",
             success: function (data) {
                 if (data.status) {
                     showCustomSucces(data.message);
@@ -127,6 +127,5 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
 
 </script>

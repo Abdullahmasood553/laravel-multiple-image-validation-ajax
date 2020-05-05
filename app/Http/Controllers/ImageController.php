@@ -59,22 +59,20 @@ class ImageController extends Controller
     }
 
 
-    public function update_post(Request $request, $id) {
-        $image = Image::where('id', $id)->first();
-        if($image){
-            if(isset($request->screenshot) ){
-                $imageName = 'users/'.time() . '.' . $request->image->getClientOriginalExtension();
-                $request->screenshot->move(public_path('images/users'), $imageName);
-                $image->screenshot =$imageName;
-            }
-
-            if($image->save()){
-                $data['success'] = ['Successfully updated'];
-                return redirect()->route('get_image')->withErrors($data);
-            }
-        }
-
-        $data['errors'] = ['There is some problem. Please try again'];
-        return redirect()->back()->withErrors($data);
+    public function update_post(Request $request) {
+        if($request->hasFile('post_updating_id')){
+            $completeFileName = $request->file('screenhot')->getClientOriginalName();
+         
+            $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
+            $extension = $request->file('donee_pic_edit')->getClientOriginalExtension();
+            $doneePic = str_replace(' ', '_', $fileNameOnly).'_'.time().'.'.$extension;
+            $path = $request->file('donee_pic_edit')->storeAs('public/donee', $doneePic);
+            $old_pic = DB::table('donee_managment')->where('id', $request->donee_id)->first();
+            $pic_name = explode('/', $old_pic->picture);
+            $test = $pic_name[3];
+            if(Storage::exists('public/donee/'.$pic_name[3])){
+                Storage::delete('public/donee/'.$pic_name[3]);
+            } 
     }
+}
 }
