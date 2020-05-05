@@ -52,4 +52,29 @@ class ImageController extends Controller
             return ['status' => false, 'message' => 'Something went wrong'];
         }
     } 
+
+    public function update_image($id) {
+        $post = Post::find($id);
+        return view('update_image')->with('post', $post);
+    }
+
+
+    public function update_post(Request $request, $id) {
+        $image = Image::where('id', $id)->first();
+        if($image){
+            if(isset($request->screenshot) ){
+                $imageName = 'users/'.time() . '.' . $request->image->getClientOriginalExtension();
+                $request->screenshot->move(public_path('images/users'), $imageName);
+                $image->screenshot =$imageName;
+            }
+
+            if($image->save()){
+                $data['success'] = ['Successfully updated'];
+                return redirect()->route('get_image')->withErrors($data);
+            }
+        }
+
+        $data['errors'] = ['There is some problem. Please try again'];
+        return redirect()->back()->withErrors($data);
+    }
 }

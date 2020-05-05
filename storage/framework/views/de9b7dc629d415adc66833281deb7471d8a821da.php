@@ -5,13 +5,14 @@
 
 <div class="container mt-4">
     <form method="POST" id="updateProfileForm" enctype="multipart/form-data">
+        <input type="hidden" name="post_updating_id">
         <?php echo csrf_field(); ?>
 
         <div class="upload-imgs">
             <div class="img-uploade-row">
                 <div class="upload-column">
 
-                    <input onchange="doAfterSelectImage(this)" type="file" name="screenshot" class="" id="screenshot_"
+                    <input onchange="doAfterSelectImage(this)" type="file" name="screenshot" class="screenshot_" id="screenshot_"
                         style="display:none">
 
                     <label for="screenshot_" class="img-uploaders">
@@ -153,6 +154,7 @@
         <th>Service ID</th>
         <th>Images</th>
         <th>Action</th>
+        <th></th>
     </tr>
 </thead>
 <tbody>
@@ -162,6 +164,7 @@
                     $('.serviceList tbody').append(`<tr>
                 <td>${element.id}</td>
                 <td><img src="<?php echo e(asset('storage/users/${element.screenshot}')); ?>" class="proporsal-imag"> </td>
+                <td><a class="btn btn-default btn-sm update_post" href="<?php echo e(url('update_image/${element.id}')); ?>">Update</a></td>
                 <td><button class="btn btn-danger btn-sm del_post" id="${element['id']}">Delete</button></td>
 
         </tr>`);
@@ -194,6 +197,7 @@
         });
     });
     // End of delete sub category
+
 
 </script>
 

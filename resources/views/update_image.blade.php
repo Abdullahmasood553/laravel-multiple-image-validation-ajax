@@ -5,8 +5,10 @@
 
 
 <div class="container mt-4">
-    <form method="POST" id="addPostForm" enctype="multipart/form-data">
+    <form method="POST" id="updatePostForm" enctype="multipart/form-data">
+        <input type="hidden" name="post_updating_id">
         @csrf
+
         <div class="upload-imgs">
             <div class="img-uploade-row">
                 <div class="upload-column">
@@ -15,7 +17,7 @@
                         style="display:none">
 
                     <label for="screenshot_" class="img-uploaders">
-                        <img src="{{asset('assets/images/placeholder.png')}}" id="post_user_image_" />
+                        <img src="{{ asset('storage/users/'.$post->screenshot) }}" id="post_user_image_" />
                     </label>
 
                     <p>Post Screenshot</p>
@@ -29,22 +31,12 @@
         </div>
         <br><br>
         <div class="modal-btn">
-            <button type="button" class="btn btn_modal_blue complete_order_btn">
-               Save Post
+            <button type="button" class="btn btn_modal_blue update_post_btn">
+               Update Post
             </button>
         </div>
 
     </form>
-
-
-    <br> <br>
-
-
-    <h3 class="text-center p-3 bg-secondary text-white">Posts Listings</h3>
-    <div class="body serviceListHolder"></div>
-
-
-
 </div>
 @endsection
 
@@ -57,12 +49,12 @@
 <script>
     $(function () {
 
-        getPostImages();
-        $(document).on("click", ".complete_order_btn", function (event) {
+
+        $(document).on("click", ".update_post_btn", function (event) {
             event.preventDefault();
             let check = userHasUploadedScreenshots();
             if (check) {
-                let myForm = document.getElementById('addPostForm');
+                let myForm = document.getElementById('updatePostForm');
                 let formData = new FormData(myForm);
                 uploadScreenshots(formData);
                 console.log(formData);
@@ -82,11 +74,11 @@
             dataType: 'JSON',
             contentType: false,
             processData: false,
-            url: "{{ route('post.completed.job.modal') }}",
+            url: "update_post"+ id,
             success: function (data) {
                 if (data.status) {
                     showCustomSucces(data.message);
-                    getPostImages();
+                
                 } else {
                     showCustomError(data.error)
                 }
@@ -135,67 +127,6 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-
-
-    ////////////////////// Get all Customers //////////////////////////////
-    // Get all the services from DB
-    function getPostImages() {
-        $.ajax({
-            type: 'GET',
-            url: "get_posts",
-            success: function (response) {
-                var response = JSON.parse(response);
-                $('.serviceListHolder').empty();
-                $('.serviceListHolder').append(`<table class="table table-hover dt-responsive nowrap serviceList" id="example" style="width:50%">
-    <thead>
-    <tr>
-        <th>Service ID</th>
-        <th>Images</th>
-        <th>Action</th>
-        <th></th>
-    </tr>
-</thead>
-<tbody>
-</tbody>
-</table>`);
-                response.forEach(element => {
-                    $('.serviceList tbody').append(`<tr>
-                <td>${element.id}</td>
-                <td><img src="{{asset('storage/users/${element.screenshot}')}}" class="proporsal-imag"> </td>
-                <td><a class="btn btn-default btn-sm update_post" href="{{ url('update_image/${element.id}') }}">Update</a></td>
-                <td><button class="btn btn-danger btn-sm del_post" id="${element['id']}">Delete</button></td>
-
-        </tr>`);
-                });
-            }
-        })
-    }
-
-
-    //Delete for Sub Category
-    $(document).on('click', '.del_post', function () {
-        var id = $(this).attr('id');
-    
-        $.ajax({
-            type: 'GET',
-            url: 'delete_post/'+id,
-            data: {
-                id: id
-            },
-            success: function (data) {
-
-                if (data.status) {
-                    showCustomSucces(data.message);
-                    getPostImages();
-                } else {
-                    showCustomError(data.error)
-                }
-
-            }
-        });
-    });
-    // End of delete sub category
 
 
 </script>
