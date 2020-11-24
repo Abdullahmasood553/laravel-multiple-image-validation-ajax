@@ -1,12 +1,11 @@
-@extends('layouts.master')
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <h1 class="text-center p-3 bg-secondary text-white">Image Preview | Validation | Save Image using AJAX</h1>
 
 
 <div class="container mt-4">
     <form method="POST" id="addPostForm" enctype="multipart/form-data">
-        @csrf
+        <?php echo csrf_field(); ?>
         <div class="upload-imgs">
             <div class="img-uploade-row">
                 <div class="upload-column">
@@ -15,7 +14,7 @@
                         style="display:none">
 
                     <label for="screenshot_" class="img-uploaders">
-                        <img src="{{asset('assets/images/placeholder.png')}}" id="post_user_image_" />
+                        <img src="<?php echo e(asset('assets/images/placeholder.png')); ?>" id="post_user_image_" />
                     </label>
 
                     <p>Post Screenshot</p>
@@ -46,14 +45,14 @@
 
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
 
 
 <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="{{ asset('js/helpers.js') }}"></script>
+<script src="<?php echo e(asset('js/helpers.js')); ?>"></script>
 <script>
     $(function () {
 
@@ -83,7 +82,7 @@
             dataType: 'JSON',
             contentType: false,
             processData: false,
-            url: "{{ route('post.completed.job.modal') }}",
+            url: "<?php echo e(route('post.completed.job.modal')); ?>",
             success: function (data) {
                 if (data.status) {
                     showCustomSucces(data.message);
@@ -163,8 +162,8 @@
                 response.forEach(element => {
                 $('.serviceList tbody').append(`<tr>
                 <td>${element.id}</td>
-                <td><img src="{{asset('storage/users/${element.screenshot}')}}" class="proporsal-imag"> </td>
-                <td><a class="btn btn-dark btn-sm update_post" href="{{ url('update_image/${element.id}') }}">Update</a></td>
+                <td><img src="<?php echo e(asset('storage/users/${element.screenshot}')); ?>" class="proporsal-imag"> </td>
+                <td><a class="btn btn-dark btn-sm update_post" href="<?php echo e(url('update_image/${element.id}')); ?>">Update</a></td>
                 <td><button class="btn btn-danger btn-sm del_post" id="${element['id']}">Delete</button></td>
                   </tr>`);
                 });
@@ -199,3 +198,5 @@
 
 
 </script>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\laravel-multiple-image-validation-ajax\resources\views/get_image.blade.php ENDPATH**/ ?>

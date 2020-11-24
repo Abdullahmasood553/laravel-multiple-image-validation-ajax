@@ -16,11 +16,10 @@
 
 
 Route::get('get_image', 'ImageController@get_image')->name('get_image');
-Route::get('update_image/{id}', 'ImageController@update_image');
 Route::post('get-approved-completed-jobs','ImageController@completedOrderJobModal')->name('post.completed.job.modal');
+Route::get('update_image/{id}', 'ImageController@update_image');
 
-
-Route::post('update_image/update_post', 'ImageController@update_post')->name('update_post');
+Route::post('update_image/update_post/{id}', 'ImageController@update_post')->name('update_post');
 
 Route::get('get_posts', 'ImageController@get_posts');
 

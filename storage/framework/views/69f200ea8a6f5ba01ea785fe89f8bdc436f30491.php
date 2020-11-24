@@ -1,13 +1,12 @@
-@extends('layouts.master')
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <h1 class="text-center p-3 bg-secondary text-white">Image Preview | Validation | Save Image using AJAX</h1>
 
 
 <div class="container mt-4">
     <form id="updatePostForm"  enctype="multipart/form-data">
-        <input type="hidden" name="id" id="id" value="{{ $post->id }}">
-        @csrf
+        <input type="hidden" name="id" id="id" value="<?php echo e($post->id); ?>">
+        <?php echo csrf_field(); ?>
      
         <div class="upload-imgs">
             <div class="img-uploade-row">
@@ -17,7 +16,7 @@
                         style="display:none">
 
                     <label for="screenshot" class="img-uploaders">
-                        <img src="{{ asset('storage/users/'.$post->screenshot) }}" id="post_user_image_" />
+                        <img src="<?php echo e(asset('storage/users/'.$post->screenshot)); ?>" id="post_user_image_" />
                     </label>
 
                     <p>Post Screenshot</p>
@@ -38,14 +37,14 @@
 
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('javascript')
+<?php $__env->startSection('javascript'); ?>
 
 
 <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="{{ asset('js/helpers.js') }}"></script>
+<script src="<?php echo e(asset('js/helpers.js')); ?>"></script>
 <script>
     $(function () {
 
@@ -132,3 +131,5 @@
     }
 
 </script>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\laravel-multiple-image-validation-ajax\resources\views/update_image.blade.php ENDPATH**/ ?>

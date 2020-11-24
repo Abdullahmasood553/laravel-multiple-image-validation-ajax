@@ -59,20 +59,38 @@ class ImageController extends Controller
     }
 
 
-    public function update_post(Request $request) {
-        if($request->hasFile('post_updating_id')){
-            $completeFileName = $request->file('screenhot')->getClientOriginalName();
+    // public function update_post(Request $request) {
+    //     if($request->hasFile('post_updating_id')){
+    //         $completeFileName = $request->file('screenhot')->getClientOriginalName();
          
+    //         $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
+    //         $extension = $request->file('donee_pic_edit')->getClientOriginalExtension();
+    //         $doneePic = str_replace(' ', '_', $fileNameOnly).'_'.time().'.'.$extension;
+    //         $path = $request->file('donee_pic_edit')->storeAs('public/donee', $doneePic);
+    //         $old_pic = DB::table('donee_managment')->where('id', $request->donee_id)->first();
+    //         $pic_name = explode('/', $old_pic->picture);
+    //         $test = $pic_name[3];
+    //         if(Storage::exists('public/donee/'.$pic_name[3])){
+    //             Storage::delete('public/donee/'.$pic_name[3]);
+    //         } 
+    //      }
+    // }
+
+    public function update_post(Request $request, $id) {
+            
+        $post = Post::find($id);
+        if($request->hasfile('screenshot')) {
+            $completeFileName = $request->file('screenshot')->getClientOriginalName();
             $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
-            $extension = $request->file('donee_pic_edit')->getClientOriginalExtension();
-            $doneePic = str_replace(' ', '_', $fileNameOnly).'_'.time().'.'.$extension;
-            $path = $request->file('donee_pic_edit')->storeAs('public/donee', $doneePic);
-            $old_pic = DB::table('donee_managment')->where('id', $request->donee_id)->first();
-            $pic_name = explode('/', $old_pic->picture);
-            $test = $pic_name[3];
-            if(Storage::exists('public/donee/'.$pic_name[3])){
-                Storage::delete('public/donee/'.$pic_name[3]);
-            } 
+            $extension = $request->file('screenshot')->getClientOriginalExtension();
+            $compPic = str_replace(' ', '_', $fileNameOnly).'-'. rand() .'_'.time().'.'.$extension;
+            $path = $request->file('screenshot')->storeAs('public/users', $compPic);
+            $post->screenshot = $compPic;
+        }
+        if ($post->save()) {
+            return ['status' => true, 'message' => 'Image Updated Successful'];
+        } else {
+            return ['status' => false, 'message' => 'Something went wrong'];
+        }
     }
-}
 }
